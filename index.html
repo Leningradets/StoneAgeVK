@@ -6,9 +6,6 @@
     <title>Unity WebGL Player | Stone Age Gem Adventure</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-
-    <!-- Yandex Games SDK -->
-    <script src="https://yandex.ru/games/sdk/v2"></script>
 </head>
 <body>
     <div id="unity-container" style="position: absolute; width: 100%; height: 100%; left: 0%; top: 0%;">
@@ -21,58 +18,6 @@
         </div>
         <div id="unity-warning"> </div>
     </div>
-
-    <script>
-        YaGames
-            .init()
-            .then(ysdk => {
-                console.log('Yandex SDK initialized');
-                window.ysdk = ysdk;
-                auth();
-                initPayments();
-                handleUnprocessedPurchases();
-            });
-
-        var player = null;
-
-        function auth() {
-            initPlayer().then(_player => {
-            }).catch(err => {
-                // Ошибка при инициализации объекта Player.
-            });
-
-            function initPlayer() {
-                return ysdk.getPlayer().then(_player => {
-                    player = _player;
-                    console.log(player.name + " initialized")
-                    return player;
-                });
-            }
-        }
-
-        var payments = null;
-
-        function initPayments() {
-            ysdk.getPayments({ signed: true }).then(_payments => {
-                // Покупки доступны.
-                payments = _payments;
-            }).catch(err => {
-                // Покупки недоступны. Включите монетизацию в консоли разработчика.
-                // Убедитесь, что на вкладке Покупки консоли разработчика присутствует таблица
-                // хотя бы с одним внутриигровым товаром и надписью «Покупки разрешены».
-            })
-        }
-
-        function handleUnprocessedPurchases() {
-            payments.getPurchases().then(purchases => purchases.forEach(consumePurchase));
-        }
-
-        function consumePurchase(purchase) {
-            player.incrementStats({ Coins: purchase.productID.match(/(\d+)/)[0] }).then(() => {
-                payments.consumePurchase(purchase.purchaseToken)
-            });
-        }
-    </script>
 
     <script>
         var container = document.querySelector("#unity-container");
@@ -164,6 +109,11 @@
             });
         };
         document.body.appendChild(script);
+    </script>
+
+    <script 
+        src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js">
+        vkBridge.send('VKWebAppInit');
     </script>
 </body>
 </html>
