@@ -59,8 +59,8 @@
         codeUrl: buildUrl + "/StoneAgeVK.wasm",
         streamingAssetsUrl: "StreamingAssets",
             companyName: "Sevaapp",
-            productName: "StoneAgeVK",
-            productVersion: "1.12.2",
+        productName: "Stone Age Gem Adventure",
+        productVersion: "1.12.2",
         showBanner: unityShowBanner,
       };
 
@@ -111,9 +111,11 @@
         document.body.appendChild(script);
     </script>
 
-    <script 
-        src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js">
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    <script>
         vkBridge.send('VKWebAppInit');
+
+        var auth = false;
     </script>
 </body>
 </html>
